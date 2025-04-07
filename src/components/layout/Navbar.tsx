@@ -1,0 +1,46 @@
+
+import React from "react";
+import { Link } from "react-router-dom";
+import { Search, Bell, User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+const Navbar = () => {
+  return (
+    <header className="sticky top-0 z-40 border-b bg-background">
+      <div className="container flex h-16 items-center justify-between py-4">
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center">
+            <div className="flex items-center gap-2">
+              <span className="hidden text-xl font-bold sm:inline-block text-primary">
+                LactaMed Insight
+              </span>
+            </div>
+          </Link>
+        </div>
+        
+        <div className="relative hidden w-1/3 lg:flex">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="İlaç veya etken madde ara..."
+            className="w-full pl-8"
+          />
+        </div>
+        
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" className="relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+          </Button>
+          <Link to="/profile">
+            <Button variant="ghost" size="icon">
+              <User className="h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+export default Navbar;
