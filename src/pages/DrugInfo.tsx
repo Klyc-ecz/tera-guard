@@ -7,6 +7,7 @@ import DrugTabs from "@/components/drug-info/DrugTabs";
 import { TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
+import { Molecule } from "lucide-react";
 
 const DrugInfo = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,6 +25,18 @@ const DrugInfo = () => {
     infantEffects: `Paracetamolün anne sütü yoluyla bebeğe geçen miktarları, bebeği etkileyecek düzeylerin çok altındadır. Yapılan çalışmalarda, anne sütü ile beslenen bebeklerde paracetamol kullanımına bağlı yan etki bildirilmemiştir. Uzun süreli yüksek doz kullanımında teorik olarak karaciğer üzerine etki ihtimali bulunmakla birlikte, klinik pratikte böyle bir durum rapor edilmemiştir.`,
     lactationEffects: `Paracetamol kullanımının anne sütü üretimini etkilediğine dair herhangi bir veri bulunmamaktadır. Süt miktarı veya içeriği üzerine olumsuz bir etkisi gözlenmemiştir.`,
     alternatives: `Emzirme döneminde ağrı kontrolünde paracetamol, ibuprofen ve asetilsalisilik asit (düşük doz) kullanılabilir. İbuprofen, 6 aydan küçük bebeklerde daha dikkatli değerlendirilmelidir. Kodein içeren kombinasyon preparatlarından kaçınılmalıdır.`,
+    // Chemical information fields
+    atcCode: "N02BE01",
+    formula: "C8H9NO2",
+    molecularWeight: "151.16 g/mol",
+    netMass: "500 mg/tablet",
+    mechanismOfAction: `Paracetamol, beyin ve omurilikte bulunan siklooksijenaz-3 (COX-3) enzimini seçici olarak inhibe ederek analjezik ve antipiretik etki gösterir. Periferik dokulardaki düşük antienflamatuvar etkisi, periferik dokularda düşük miktarda bulunan peroksitler nedeniyle siklooksijenaz enzimini inhibe etme kapasitesinin düşük olmasına bağlıdır.`,
+    pharmacokinetics: `
+      - Emilim: Oral yoldan alındıktan sonra gastrointestinal kanaldan hızla emilir. Maksimum plazma konsantrasyonuna 30-60 dakika içinde ulaşır.
+      - Dağılım: Vücut sıvılarına hızla dağılır. Plazma proteinlerine bağlanma oranı düşüktür (<%20).
+      - Metabolizma: Karaciğerde glukuronik asit ve sülfat ile konjugasyona uğrar (%90). Küçük bir kısmı (%5-10) sitokrom P450 enzim sistemi tarafından metabolize edilir.
+      - Eliminasyon: Metabolitleri idrarla atılır. Plazma yarılanma ömrü 1.5-3 saattir.
+    `,
     references: [
       "Anderson PO. Acetaminophen (Paracetamol) and Breastfeeding. Breastfeed Med. 2018;13(10):645-647.",
       "Sachs HC; Committee On Drugs. The transfer of drugs and therapeutics into human breast milk: an update on selected topics. Pediatrics. 2013;132(3):e796-e809.",
@@ -79,6 +92,52 @@ const DrugInfo = () => {
               <CardContent className="p-6">
                 <h2 className="text-xl font-semibold mb-4">Kullanım Özeti</h2>
                 <p className="text-base leading-relaxed">{drug.summary}</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="chemical-info">
+            <Card>
+              <CardContent className="p-6">
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <Molecule className="h-5 w-5" />
+                  Kimyasal Bilgiler
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">ATC Kodu</h3>
+                      <p className="text-base bg-muted p-2 rounded">{drug.atcCode}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">Formülü</h3>
+                      <p className="text-base bg-muted p-2 rounded">{drug.formula}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">Molekül Ağırlığı</h3>
+                      <p className="text-base bg-muted p-2 rounded">{drug.molecularWeight}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">Net Kütlesi</h3>
+                      <p className="text-base bg-muted p-2 rounded">{drug.netMass}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">Etki Mekanizması</h3>
+                      <p className="text-base leading-relaxed">{drug.mechanismOfAction}</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-lg font-medium mb-2">Farmakokinetik Özellikleri</h3>
+                      <div className="text-base leading-relaxed whitespace-pre-line">{drug.pharmacokinetics}</div>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

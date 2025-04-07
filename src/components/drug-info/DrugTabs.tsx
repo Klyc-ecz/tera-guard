@@ -12,6 +12,7 @@ const DrugTabs: React.FC<DrugTabsProps> = ({ children, defaultTab = "summary" })
     <Tabs defaultValue={defaultTab} className="w-full">
       <TabsList className="w-full max-w-full overflow-x-auto flex-nowrap">
         <TabsTrigger value="summary">Özet</TabsTrigger>
+        <TabsTrigger value="chemical-info">Kimyasal Bilgiler</TabsTrigger>
         <TabsTrigger value="drug-levels">İlaç Seviyeleri</TabsTrigger>
         <TabsTrigger value="infant-effects">Bebekteki Etkileri</TabsTrigger>
         <TabsTrigger value="lactation-effects">Emzirmeye Etkileri</TabsTrigger>
