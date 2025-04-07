@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -7,14 +6,13 @@ import DrugTabs from "@/components/drug-info/DrugTabs";
 import { TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
-import { Molecule } from "lucide-react";
+import { AlarmClock, FlaskConical } from "lucide-react";
 
 const DrugInfo = () => {
   const { id } = useParams<{ id: string }>();
   const [isFavorite, setIsFavorite] = useState(false);
   const { toast } = useToast();
 
-  // Mock drug data - in real application, this would be fetched based on the id
   const drug = {
     id: id || "1",
     name: "Paracetamol",
@@ -25,7 +23,6 @@ const DrugInfo = () => {
     infantEffects: `Paracetamolün anne sütü yoluyla bebeğe geçen miktarları, bebeği etkileyecek düzeylerin çok altındadır. Yapılan çalışmalarda, anne sütü ile beslenen bebeklerde paracetamol kullanımına bağlı yan etki bildirilmemiştir. Uzun süreli yüksek doz kullanımında teorik olarak karaciğer üzerine etki ihtimali bulunmakla birlikte, klinik pratikte böyle bir durum rapor edilmemiştir.`,
     lactationEffects: `Paracetamol kullanımının anne sütü üretimini etkilediğine dair herhangi bir veri bulunmamaktadır. Süt miktarı veya içeriği üzerine olumsuz bir etkisi gözlenmemiştir.`,
     alternatives: `Emzirme döneminde ağrı kontrolünde paracetamol, ibuprofen ve asetilsalisilik asit (düşük doz) kullanılabilir. İbuprofen, 6 aydan küçük bebeklerde daha dikkatli değerlendirilmelidir. Kodein içeren kombinasyon preparatlarından kaçınılmalıdır.`,
-    // Chemical information fields
     atcCode: "N02BE01",
     formula: "C8H9NO2",
     molecularWeight: "151.16 g/mol",
@@ -100,7 +97,7 @@ const DrugInfo = () => {
             <Card>
               <CardContent className="p-6">
                 <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                  <Molecule className="h-5 w-5" />
+                  <FlaskConical className="h-5 w-5" />
                   Kimyasal Bilgiler
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
