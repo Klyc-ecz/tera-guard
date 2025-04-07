@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export interface FavoriteItem {
   id: string;
   name: string;
-  category: "safe" | "caution" | "danger"; // danger kategorisini ekledik
+  category: "safe" | "caution" | "danger";
 }
 
 interface FavoritesListProps {

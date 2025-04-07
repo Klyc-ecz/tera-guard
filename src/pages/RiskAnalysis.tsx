@@ -1,454 +1,311 @@
 
 import React, { useState } from "react";
-import Layout from "@/components/layout/Layout";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
+import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/components/ui/table";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { 
-  Form, 
-  FormControl, 
-  FormDescription, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Textarea } from "@/components/ui/textarea";
-import * as z from "zod";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertCircle, FileText, Plus, Save, Trash2, Download } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { nanoid } from 'nanoid';
 import { toast } from "sonner";
-import { AlertCircle, Download, Plus, Trash } from "lucide-react";
 
-// Form şemaları
-const patientSchema = z.object({
-  nameSurname: z.string().min(2, { message: "Ad soyad en az 2 karakter olmalıdır" }),
-  age: z.string().refine((val) => !isNaN(parseInt(val)) && parseInt(val) > 0, {
-    message: "Geçerli bir yaş giriniz",
-  }),
-  pregnancyWeek: z.string().refine(val => !isNaN(parseInt(val)) && parseInt(val) >= 0 && parseInt(val) <= 42, {
-    message: "Geçerli bir gebelik haftası giriniz (0-42)",
-  }),
-  specialConditions: z.string().optional(),
-});
-
-// İlaç şeması
-const medicationSchema = z.object({
-  name: z.string().min(2, { message: "İlaç adı en az 2 karakter olmalıdır" }),
-  dose: z.string().min(1, { message: "Doz bilgisi giriniz" }),
-  frequency: z.string().min(1, { message: "Kullanım sıklığı giriniz" }),
-  startDate: z.string().min(1, { message: "Başlangıç tarihi giriniz" }),
-});
-
-// Teratojenite risk seviyeleri
+// Define risk levels with their colors
 const riskLevels = {
-  high: "Yüksek Risk - Gebelikte kontrendike",
-  moderate: "Orta Risk - Dikkatli kullanım gerektirir", 
-  low: "Düşük Risk - Genellikle güvenli",
-  unknown: "Bilinmiyor - Yeterli veri yok"
+  low: { label: "Düşük Risk", color: "bg-green-500", description: "Teratojenite riski minimal seviyede." },
+  moderate: { label: "Orta Risk", color: "bg-yellow-500", description: "Dikkatle kullanılmalı, risk-fayda dengesi değerlendirilmeli." },
+  high: { label: "Yüksek Risk", color: "bg-red-500", description: "Teratojenite riski yüksek, alternatif tedavi düşünülmeli." },
+  unknown: { label: "Bilinmeyen", color: "bg-gray-500", description: "Risk seviyesi değerlendirilemedi." }
 };
 
-type Medication = {
+interface Medication {
   id: string;
   name: string;
   dose: string;
   frequency: string;
   startDate: string;
-  riskLevel?: keyof typeof riskLevels;
-  riskDescription?: string;
-};
+  riskLevel: keyof typeof riskLevels;
+  riskDescription: string;
+}
+
+interface Patient {
+  name: string;
+  age: string;
+  pregnancyWeek: string;
+  medicalHistory: string;
+  medications: Medication[];
+}
 
 const RiskAnalysis = () => {
-  const [medications, setMedications] = useState<Medication[]>([]);
-  const [currentMedication, setCurrentMedication] = useState<Medication | null>(null);
-  
-  // Hasta formu
-  const patientForm = useForm<z.infer<typeof patientSchema>>({
-    resolver: zodResolver(patientSchema),
-    defaultValues: {
-      nameSurname: "",
-      age: "",
-      pregnancyWeek: "",
-      specialConditions: "",
-    }
+  const [patient, setPatient] = useState<Patient>({
+    name: "",
+    age: "",
+    pregnancyWeek: "",
+    medicalHistory: "",
+    medications: []
   });
-  
-  // İlaç formu
-  const medicationForm = useForm<z.infer<typeof medicationSchema>>({
-    resolver: zodResolver(medicationSchema),
-    defaultValues: {
+
+  const [newMedication, setNewMedication] = useState<Medication>({
+    id: nanoid(),
+    name: "",
+    dose: "",
+    frequency: "",
+    startDate: "",
+    riskLevel: "unknown",
+    riskDescription: riskLevels.unknown.description
+  });
+
+  const handlePatientChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setPatient(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleMedicationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewMedication(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleRiskLevelChange = (value: keyof typeof riskLevels) => {
+    setNewMedication(prev => ({
+      ...prev,
+      riskLevel: value,
+      riskDescription: riskLevels[value].description
+    }));
+  };
+
+  const addMedication = () => {
+    if (!newMedication.name) {
+      toast.error("İlaç adı girilmelidir");
+      return;
+    }
+
+    setPatient(prev => ({
+      ...prev,
+      medications: [...prev.medications, newMedication]
+    }));
+
+    setNewMedication({
+      id: nanoid(),
       name: "",
       dose: "",
       frequency: "",
       startDate: "",
-    }
-  });
+      riskLevel: "unknown",
+      riskDescription: riskLevels.unknown.description
+    });
 
-  // İlaç ekleme
-  const handleAddMedication = (values: z.infer<typeof medicationSchema>) => {
-    const newMedication: Medication = {
-      id: Date.now().toString(),
-      ...values,
-      // Demo amaçlı rastgele risk seviyesi ataması
-      riskLevel: Object.keys(riskLevels)[Math.floor(Math.random() * Object.keys(riskLevels).length)] as keyof typeof riskLevels,
-      riskDescription: "Bu risk değerlendirmesi simülasyon amaçlıdır.",
-    };
-    
-    setMedications([...medications, newMedication]);
-    medicationForm.reset();
-    toast.success("İlaç başarıyla eklendi");
+    toast.success("İlaç eklendi");
   };
 
-  // İlaç silme
-  const handleRemoveMedication = (id: string) => {
-    setMedications(medications.filter(med => med.id !== id));
-    toast.info("İlaç listeden kaldırıldı");
+  const removeMedication = (id: string) => {
+    setPatient(prev => ({
+      ...prev,
+      medications: prev.medications.filter(med => med.id !== id)
+    }));
+    toast.info("İlaç kaldırıldı");
   };
 
-  // İlaç detaylarını görüntüleme
-  const handleViewMedication = (medication: Medication) => {
-    setCurrentMedication(medication);
-  };
-
-  // Rapor oluştur
   const generateReport = () => {
-    const patientData = patientForm.getValues();
-    
-    if (Object.values(patientData).some(val => val === "") || medications.length === 0) {
-      toast.error("Rapor oluşturmak için hasta bilgileri ve en az bir ilaç eklemelisiniz");
+    if (!patient.name) {
+      toast.error("Hasta bilgileri girilmelidir");
       return;
     }
     
-    toast.success("Rapor oluşturuldu ve indirme başlatıldı");
-    // Gerçek bir uygulamada burada PDF oluşturma ve indirme işlemi olacaktır
+    toast.success("Rapor başarıyla oluşturuldu");
+    // Here we would usually generate a PDF or other report format
+    // For now we'll just console.log the data
+    console.log("Generated report for:", patient);
   };
 
   return (
     <Layout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Teratojenite Risk Analizi</h1>
-          <Button onClick={generateReport} disabled={medications.length === 0} className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Rapor Oluştur ve İndir
-          </Button>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Hasta Bilgileri */}
+      <div className="container mx-auto py-6 space-y-6">
+        <h1 className="text-3xl font-bold">Teratojenik Risk Değerlendirmesi</h1>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Patient Information Card */}
           <Card>
             <CardHeader>
               <CardTitle>Hasta Bilgileri</CardTitle>
-              <CardDescription>
-                Risk analizi yapılacak hastanın bilgilerini giriniz
-              </CardDescription>
+              <CardDescription>Değerlendirme için hasta bilgilerini girin</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Form {...patientForm}>
-                <form className="space-y-4">
-                  <FormField
-                    control={patientForm.control}
-                    name="nameSurname"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Ad Soyad</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Hasta adı ve soyadı" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField
-                      control={patientForm.control}
-                      name="age"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Yaş</FormLabel>
-                          <FormControl>
-                            <Input placeholder="28" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={patientForm.control}
-                      name="pregnancyWeek"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Gebelik Haftası</FormLabel>
-                          <FormControl>
-                            <Input placeholder="24" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  
-                  <FormField
-                    control={patientForm.control}
-                    name="specialConditions"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Özel Durumlar</FormLabel>
-                        <FormControl>
-                          <Textarea 
-                            placeholder="Kronik hastalıklar, alerjiler veya diğer önemli tıbbi durumlar..." 
-                            className="min-h-[100px]"
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Risk değerlendirmesinde önemli olabilecek diğer tıbbi durumlar
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </form>
-              </Form>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Hasta Adı</Label>
+                <Input id="name" name="name" value={patient.name} onChange={handlePatientChange} placeholder="Hasta adını girin" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="age">Yaş</Label>
+                <Input id="age" name="age" value={patient.age} onChange={handlePatientChange} placeholder="Hasta yaşını girin" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="pregnancyWeek">Gebelik Haftası</Label>
+                <Input id="pregnancyWeek" name="pregnancyWeek" value={patient.pregnancyWeek} onChange={handlePatientChange} placeholder="Gebelik haftasını girin" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="medicalHistory">Tıbbi Geçmiş</Label>
+                <Textarea id="medicalHistory" name="medicalHistory" value={patient.medicalHistory} onChange={handlePatientChange} placeholder="Hastanın tıbbi geçmişini girin" />
+              </div>
             </CardContent>
           </Card>
 
-          {/* İlaç Bilgileri */}
+          {/* Medication Addition Card */}
           <Card>
             <CardHeader>
-              <CardTitle>İlaç Ekleme</CardTitle>
-              <CardDescription>
-                Hastanın kullandığı ilaçları ekleyin
-              </CardDescription>
+              <CardTitle>İlaç Ekle</CardTitle>
+              <CardDescription>Değerlendirilecek ilacı ekleyin</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Form {...medicationForm}>
-                <form onSubmit={medicationForm.handleSubmit(handleAddMedication)} className="space-y-4">
-                  <FormField
-                    control={medicationForm.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>İlaç Adı</FormLabel>
-                        <FormControl>
-                          <Input placeholder="İlaç adını giriniz" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={medicationForm.control}
-                    name="dose"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Doz</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Örn: 500 mg" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    <FormField
-                      control={medicationForm.control}
-                      name="frequency"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Kullanım Sıklığı</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Örn: Günde 2 kez" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={medicationForm.control}
-                      name="startDate"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Başlangıç Tarihi</FormLabel>
-                          <FormControl>
-                            <Input type="date" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  
-                  <Button type="submit" className="w-full flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    İlaç Ekle
-                  </Button>
-                </form>
-              </Form>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="medicationName">İlaç Adı</Label>
+                <Input id="medicationName" name="name" value={newMedication.name} onChange={handleMedicationChange} placeholder="İlaç adını girin" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="dose">Doz</Label>
+                  <Input id="dose" name="dose" value={newMedication.dose} onChange={handleMedicationChange} placeholder="İlaç dozunu girin" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="frequency">Kullanım Sıklığı</Label>
+                  <Input id="frequency" name="frequency" value={newMedication.frequency} onChange={handleMedicationChange} placeholder="Örn: Günde 2 kere" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="startDate">Başlangıç Tarihi</Label>
+                <Input id="startDate" name="startDate" type="date" value={newMedication.startDate} onChange={handleMedicationChange} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="riskLevel">Risk Seviyesi</Label>
+                <Select value={newMedication.riskLevel} onValueChange={(value: keyof typeof riskLevels) => handleRiskLevelChange(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Risk seviyesi seçin" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(riskLevels).map(([key, { label }]) => (
+                      <SelectItem key={key} value={key}>
+                        <div className="flex items-center gap-2">
+                          <div className={`w-3 h-3 rounded-full ${riskLevels[key as keyof typeof riskLevels].color}`}></div>
+                          <span>{label}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="riskDescription">Risk Açıklaması</Label>
+                <Textarea id="riskDescription" value={newMedication.riskDescription} readOnly className="bg-gray-50" />
+              </div>
             </CardContent>
+            <CardFooter>
+              <Button onClick={addMedication} className="w-full">
+                <Plus className="mr-2 h-4 w-4" /> İlaç Ekle
+              </Button>
+            </CardFooter>
           </Card>
         </div>
 
-        {/* İlaç Listesi ve Risk Analizi */}
+        {/* Medications List */}
         <Card>
           <CardHeader>
-            <CardTitle>İlaç Listesi ve Risk Analizi</CardTitle>
-            <CardDescription>
-              Eklenmiş ilaçlar ve teratojenite risk değerlendirmesi
-            </CardDescription>
+            <CardTitle>Eklenen İlaçlar</CardTitle>
+            <CardDescription>Değerlendirilecek ilaçların listesi</CardDescription>
           </CardHeader>
           <CardContent>
-            {medications.length > 0 ? (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>İlaç Adı</TableHead>
-                    <TableHead>Doz</TableHead>
-                    <TableHead>Kullanım Sıklığı</TableHead>
-                    <TableHead>Teratojenite Riski</TableHead>
-                    <TableHead className="text-right">İşlemler</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {medications.map((med) => (
-                    <TableRow key={med.id}>
-                      <TableCell className="font-medium">{med.name}</TableCell>
-                      <TableCell>{med.dose}</TableCell>
-                      <TableCell>{med.frequency}</TableCell>
-                      <TableCell>
-                        <div className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-semibold
-                          ${med.riskLevel === 'high' ? 'bg-red-100 text-red-800' : 
-                            med.riskLevel === 'moderate' ? 'bg-yellow-100 text-yellow-800' : 
-                            med.riskLevel === 'low' ? 'bg-green-100 text-green-800' : 
-                            'bg-gray-100 text-gray-800'}`
-                        }>
-                          {med.riskLevel === 'high' && <AlertCircle className="h-3 w-3" />}
-                          {riskLevels[med.riskLevel || 'unknown']}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Sheet>
-                            <SheetTrigger asChild>
-                              <Button 
-                                variant="outline" 
-                                size="sm"
-                                onClick={() => handleViewMedication(med)}
-                              >
-                                Detaylar
-                              </Button>
-                            </SheetTrigger>
-                            <SheetContent>
-                              <SheetHeader>
-                                <SheetTitle>{med.name}</SheetTitle>
-                                <SheetDescription>
-                                  Teratojenite Risk Detayları
-                                </SheetDescription>
-                              </SheetHeader>
-                              <div className="mt-6 space-y-4">
-                                <div>
-                                  <h4 className="text-sm font-medium">Doz</h4>
-                                  <p className="text-sm text-muted-foreground">{med.dose}</p>
-                                </div>
-                                <div>
-                                  <h4 className="text-sm font-medium">Kullanım Sıklığı</h4>
-                                  <p className="text-sm text-muted-foreground">{med.frequency}</p>
-                                </div>
-                                <div>
-                                  <h4 className="text-sm font-medium">Başlangıç Tarihi</h4>
-                                  <p className="text-sm text-muted-foreground">{med.startDate}</p>
-                                </div>
-                                <div>
-                                  <h4 className="text-sm font-medium">Teratojenite Risk Seviyesi</h4>
-                                  <div className={`inline-flex items-center gap-1 mt-1 rounded-full px-2 py-1 text-xs font-semibold
-                                    ${med.riskLevel === 'high' ? 'bg-red-100 text-red-800' : 
-                                      med.riskLevel === 'moderate' ? 'bg-yellow-100 text-yellow-800' : 
-                                      med.riskLevel === 'low' ? 'bg-green-100 text-green-800' : 
-                                      'bg-gray-100 text-gray-800'}`
-                                  }>
-                                    {med.riskLevel === 'high' && <AlertCircle className="h-3 w-3" />}
-                                    {riskLevels[med.riskLevel || 'unknown']}
-                                  </div>
-                                </div>
-                                <div>
-                                  <h4 className="text-sm font-medium">Risk Açıklaması</h4>
-                                  <p className="text-sm text-muted-foreground mt-1">{med.riskDescription}</p>
-                                </div>
-                                <div>
-                                  <h4 className="text-sm font-medium">Öneriler</h4>
-                                  <p className="text-sm text-muted-foreground mt-1">
-                                    {med.riskLevel === 'high' ? 
-                                      "Bu ilacın kullanımı gebelikte önerilmemektedir. Alternatif tedavi seçenekleri değerlendirilmelidir." : 
-                                      med.riskLevel === 'moderate' ? 
-                                      "İlaç fayda/risk değerlendirmesi yapılarak ve düşük dozda kullanılmalıdır." : 
-                                      "İlaç gebelikte güvenli kabul edilmektedir, ancak klinik gereklilik dikkate alınmalıdır."}
-                                  </p>
-                                </div>
-                              </div>
-                            </SheetContent>
-                          </Sheet>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            onClick={() => handleRemoveMedication(med.id)}
-                          >
-                            <Trash className="h-4 w-4 text-red-500" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+            {patient.medications.length > 0 ? (
+              <div className="space-y-4">
+                {patient.medications.map((med) => (
+                  <div key={med.id} className="flex items-center justify-between p-4 border rounded-lg">
+                    <div className="space-y-1">
+                      <div className="font-medium">{med.name}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {med.dose} • {med.frequency} • Başlangıç: {med.startDate || "Belirtilmemiş"}
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <div className={`w-3 h-3 rounded-full ${riskLevels[med.riskLevel].color}`}></div>
+                        <span className="text-sm">{riskLevels[med.riskLevel].label}</span>
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="icon" onClick={() => removeMedication(med.id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <p className="text-muted-foreground mb-2">Henüz ilaç eklenmedi</p>
-                <p className="text-sm text-muted-foreground">
-                  Risk analizi için yukarıdan ilaç ekleyiniz
-                </p>
+              <div className="text-center py-6 text-muted-foreground">
+                Henüz ilaç eklenmedi
               </div>
             )}
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <p className="text-sm text-muted-foreground">
-              Toplam {medications.length} ilaç
-            </p>
-            {medications.length > 0 && (
-              <Button variant="outline" onClick={() => setMedications([])}>
-                Listeyi Temizle
-              </Button>
-            )}
-          </CardFooter>
         </Card>
+
+        {/* Risk Assessment */}
+        {patient.medications.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Teratojenite Risk Değerlendirmesi</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {patient.medications.some(med => med.riskLevel === "high") && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Yüksek Risk Tespit Edildi</AlertTitle>
+                  <AlertDescription>
+                    Hastanın kullandığı ilaçlar arasında yüksek teratojenite riski olan ilaçlar bulunmaktadır. 
+                    Tedavi planı yeniden değerlendirilmelidir.
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {patient.medications.some(med => med.riskLevel === "moderate") && !patient.medications.some(med => med.riskLevel === "high") && (
+                <Alert>
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Orta Seviye Risk Tespit Edildi</AlertTitle>
+                  <AlertDescription>
+                    Hastanın kullandığı ilaçlar arasında orta düzeyde teratojenite riski olan ilaçlar bulunmaktadır.
+                    Risk-fayda dengesi değerlendirilmelidir.
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              {patient.medications.every(med => med.riskLevel === "low") && (
+                <Alert className="bg-green-50 border-green-200">
+                  <AlertCircle className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-800">Düşük Risk Tespit Edildi</AlertTitle>
+                  <AlertDescription className="text-green-700">
+                    Hastanın kullandığı tüm ilaçlar düşük teratojenite riski taşımaktadır.
+                  </AlertDescription>
+                </Alert>
+              )}
+              
+              <div className="pt-2">
+                <h3 className="font-medium mb-2">İlaç Bazlı Değerlendirme</h3>
+                <div className="space-y-2">
+                  {patient.medications.map(med => (
+                    <div key={med.id} className="p-3 border rounded-md">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded-full ${riskLevels[med.riskLevel].color}`}></div>
+                        <span className="font-medium">{med.name}</span>
+                      </div>
+                      <p className="mt-1 text-sm text-muted-foreground">{med.riskDescription}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-2">
+              <Button onClick={generateReport} className="w-full">
+                <FileText className="mr-2 h-4 w-4" /> Rapor Oluştur
+              </Button>
+              <Button variant="outline" className="w-full">
+                <Download className="mr-2 h-4 w-4" /> PDF Olarak İndir
+              </Button>
+            </CardFooter>
+          </Card>
+        )}
       </div>
     </Layout>
   );
