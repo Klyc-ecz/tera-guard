@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 export interface FavoriteItem {
   id: string;
   name: string;
-  category: "safe" | "caution" | "danger"; // Updated to include "danger"
+  category: "safe" | "caution" | "danger";
 }
 
 interface FavoritesListProps {

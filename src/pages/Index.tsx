@@ -4,16 +4,16 @@ import Layout from "@/components/layout/Layout";
 import SearchBar from "@/components/dashboard/SearchBar";
 import RiskCategoryFilter from "@/components/dashboard/RiskCategoryFilter";
 import RecentDrugCard from "@/components/dashboard/RecentDrugCard";
-import FavoritesList from "@/components/dashboard/FavoritesList";
+import FavoritesList, { FavoriteItem } from "@/components/dashboard/FavoritesList";
 import GuidelineCard from "@/components/dashboard/GuidelineCard";
 
 type RiskCategory = "all" | "safe" | "caution" | "danger";
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<RiskCategory>("all");
-  const [favorites, setFavorites] = useState([
-    { id: "1", name: "Paracetamol", category: "safe" as const },
-    { id: "3", name: "Ibuprofen", category: "caution" as const },
+  const [favorites, setFavorites] = useState<FavoriteItem[]>([
+    { id: "1", name: "Paracetamol", category: "safe" },
+    { id: "3", name: "Ibuprofen", category: "caution" },
   ]);
 
   const recentDrugs = [
