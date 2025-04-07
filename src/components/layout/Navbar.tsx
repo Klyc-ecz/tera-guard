@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import { Search, Bell, User } from "lucide-react";
+import { Search, Bell, User, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -12,8 +12,9 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center">
             <div className="flex items-center gap-2">
-              <span className="hidden text-xl font-bold sm:inline-block text-primary">
-                LactaMed Insight
+              <ShieldCheck className="h-6 w-6 text-primary" />
+              <span className="hidden text-xl font-bold sm:inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                TeraGuard
               </span>
             </div>
           </Link>
