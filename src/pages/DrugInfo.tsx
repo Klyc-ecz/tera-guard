@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import DrugHeader from "@/components/drug-info/DrugHeader";
 import DrugTabs from "@/components/drug-info/DrugTabs";
+import DiscussionThread, { Message } from "@/components/drug-info/DiscussionThread";
 import { TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +13,37 @@ const DrugInfo = () => {
   const { id } = useParams<{ id: string }>();
   const [isFavorite, setIsFavorite] = useState(false);
   const { toast } = useToast();
+
+  const discussion: Message[] = [
+    {
+      id: "1",
+      sender: {
+        name: "Dr. Elif Yılmaz",
+        specialty: "Aile Hekimi",
+      },
+      time: "10:24",
+      content: "Merhaba, 12 haftalık hamile bir hastam var. Migren atakları için zaman zaman ibuprofen kullandığını belirtti. Bu dönemde ibuprofenin güvenli olup olmadığını teyit etmek istiyorum. Kullanımı önerilir mi, alternatif bir öneriniz olur mu?",
+      isQuestion: true,
+    },
+    {
+      id: "2",
+      sender: {
+        name: "Dr. Ayşe Demir",
+        specialty: "Kadın Doğum Uzmanı",
+      },
+      time: "11:03",
+      content: "Merhaba Elif Hanım, 12. haftaya kadar ibuprofen sınırlı durumlarda kullanılabiliyor ancak 2. trimesterin başı itibarıyla dikkatli olunmalı. Özellikle 3. trimesterde kontrendikedir. Şu anda alternatif olarak parasetamol tercih edilmesi daha güvenlidir. Migreni sık yaşıyorsa nöroloji görüşü de alınabilir. Geçmiş olsun.",
+    },
+    {
+      id: "3",
+      sender: {
+        name: "Dr. Elif Yılmaz",
+        specialty: "Aile Hekimi",
+      },
+      time: "11:08",
+      content: "Hızlı dönüşünüz için çok teşekkür ederim. Parasetamol ile ilerleyeceğim, gerekirse yönlendirme yaparım.",
+    },
+  ];
 
   const drug = {
     id: id || "1",
@@ -35,6 +67,7 @@ const DrugInfo = () => {
       - Eliminasyon: Metabolitleri idrarla atılır. Plazma yarılanma ömrü 1.5-3 saattir.
     `,
     references: [
+      "US National Library of Medicine. DailyMed - ACETAMINOPHEN tablet. https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53b3ed76-34db-4a2a-aa5a-14a24c45e73c",
       "Anderson PO. Acetaminophen (Paracetamol) and Breastfeeding. Breastfeed Med. 2018;13(10):645-647.",
       "Sachs HC; Committee On Drugs. The transfer of drugs and therapeutics into human breast milk: an update on selected topics. Pediatrics. 2013;132(3):e796-e809.",
       "World Health Organization. Breastfeeding and maternal medication. 2002."
@@ -207,6 +240,14 @@ const DrugInfo = () => {
                     </div>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          
+          <TabsContent value="discussions">
+            <Card>
+              <CardContent className="p-6">
+                <DiscussionThread messages={discussion} />
               </CardContent>
             </Card>
           </TabsContent>

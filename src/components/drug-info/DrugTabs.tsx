@@ -19,6 +19,7 @@ const DrugTabs: React.FC<DrugTabsProps> = ({ children, defaultTab = "summary" })
         <TabsTrigger value="alternatives">Alternatif İlaçlar</TabsTrigger>
         <TabsTrigger value="references">Kaynaklar</TabsTrigger>
         <TabsTrigger value="comments">Uzman Görüşleri</TabsTrigger>
+        <TabsTrigger value="discussions">Danış-Sor</TabsTrigger>
       </TabsList>
       {children}
     </Tabs>
