@@ -8,6 +8,8 @@ import Index from "./pages/Index";
 import DrugInfo from "./pages/DrugInfo";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import RiskAnalysis from "./pages/RiskAnalysis";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +20,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Index />} />
           <Route path="/drug-info/:id" element={<DrugInfo />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/risk-analysis" element={<RiskAnalysis />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
