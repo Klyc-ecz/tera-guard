@@ -78,9 +78,10 @@ const sampleMedications = [
 ];
 
 const experts = [
-  "Prof. Dr. Mustafa Sertaç YILMAZ\nTıbbi Farmakoloji AbD",
-  "Prof. Dr. Sinan ÇAVUN\nTıbbi Farmakoloji AbD",
-  "Öğretim Görevlisi Dr. Gülce SEVDAR ÇEÇEN\nTıbbi Farmakoloji AbD"
+  "Prof. Dr. Hakan Demir\nTıbbi Farmakoloji AbD",
+  "Prof. Dr. Ali Kılıçaraslan\nTıbbi Farmakoloji AbD",
+  "Dr. Feyza Bilir\nTıbbi Farmakoloji AbD",
+  "Ecz. Mahmut Yılmaz\nKlinik Eczacı"
 ];
 
 const RiskAnalysis = () => {
