@@ -43,7 +43,7 @@ const Sidebar = () => {
     <div className="hidden border-r bg-background md:block w-64 overflow-y-auto">
       <div className="flex flex-col h-full py-4">
         <div className="px-4 py-2">
-          <h2 className="text-lg font-semibold">LactaMed Insight</h2>
+          <h2 className="text-lg font-semibold">TeraGuard</h2>
         </div>
         
         <div className="px-3 py-2">
