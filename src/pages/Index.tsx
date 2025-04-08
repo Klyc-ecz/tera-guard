@@ -110,7 +110,7 @@ const Index = () => {
         <div className="space-y-4">
           <h1 className="text-2xl font-bold">Hoş Geldiniz</h1>
           <p className="text-muted-foreground">
-            LactaMed Insight ile emzirme döneminde güvenli ilaç kullanımı hakkında bilgi edinin.
+            TeraGuard ile emzirme döneminde güvenli ilaç kullanımı hakkında bilgi edinin.
           </p>
           
           <SearchBar />
