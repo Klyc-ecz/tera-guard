@@ -6,6 +6,9 @@ import RiskCategoryFilter from "@/components/dashboard/RiskCategoryFilter";
 import RecentDrugCard from "@/components/dashboard/RecentDrugCard";
 import FavoritesList, { FavoriteItem } from "@/components/dashboard/FavoritesList";
 import GuidelineCard from "@/components/dashboard/GuidelineCard";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { LogIn } from "lucide-react";
 
 type RiskCategory = "all" | "safe" | "caution" | "danger";
 
@@ -108,10 +111,20 @@ const Index = () => {
     <Layout>
       <div className="space-y-8">
         <div className="space-y-4">
-          <h1 className="text-2xl font-bold">Hoş Geldiniz</h1>
-          <p className="text-muted-foreground">
-            TeraGuard ile emzirme döneminde güvenli ilaç kullanımı hakkında bilgi edinin.
-          </p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
+            <div>
+              <h1 className="text-2xl font-bold">Hoş Geldiniz</h1>
+              <p className="text-muted-foreground">
+                TeraGuard ile emzirme döneminde güvenli ilaç kullanımı hakkında bilgi edinin.
+              </p>
+            </div>
+            <Link to="/login">
+              <Button className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                <span>Giriş Yapın veya Kaydolun</span>
+              </Button>
+            </Link>
+          </div>
           
           <SearchBar />
           
