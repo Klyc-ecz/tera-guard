@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { User, KeyRound, ShieldCheck, ShieldAlert } from "lucide-react";
+import { User, KeyRound, ShieldCheck, ShieldAlert, UserPlus, Mail, Lock, Building } from "lucide-react";
 
 // Form schema
 const loginSchema = z.object({
@@ -18,11 +18,24 @@ const loginSchema = z.object({
   password: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
 });
 
+const registerSchema = z.object({
+  name: z.string().min(2, { message: "Ad en az 2 karakter olmalıdır" }),
+  email: z.string().email({ message: "Geçerli bir e-posta adresi giriniz" }),
+  password: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
+  confirmPassword: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
+  institution: z.string().optional(),
+  userType: z.enum(["pharmacist", "doctor"]),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Şifreler eşleşmiyor",
+  path: ["confirmPassword"],
+});
+
 const Login = () => {
   const navigate = useNavigate();
   const [userType, setUserType] = useState<"pharmacist" | "doctor">("pharmacist");
+  const [authMode, setAuthMode] = useState<"login" | "register">("login");
   
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -30,15 +43,39 @@ const Login = () => {
     }
   });
 
-  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+  const registerForm = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      institution: "",
+      userType: userType
+    }
+  });
+
+  React.useEffect(() => {
+    registerForm.setValue("userType", userType);
+  }, [userType, registerForm]);
+
+  const handleLogin = (values: z.infer<typeof loginSchema>) => {
     // Demo login simulation
     console.log(`${userType} login:`, values);
     
-    // In a real app, an API call would be made here
     toast.success(`${userType === "pharmacist" ? "Eczacı" : "Hekim"} girişi başarılı!`);
     
     // Redirect to home page
     setTimeout(() => navigate("/"), 1500);
+  };
+
+  const handleRegister = (values: z.infer<typeof registerSchema>) => {
+    console.log(`${userType} register:`, values);
+    
+    toast.success(`${userType === "pharmacist" ? "Eczacı" : "Hekim"} kaydı başarılı! Lütfen giriş yapın.`);
+    
+    // Switch to login mode after successful registration
+    setAuthMode("login");
   };
 
   return (
@@ -54,7 +91,7 @@ const Login = () => {
           </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TeraGuard</CardTitle>
           <CardDescription className="text-muted-foreground">
-            Emzirme döneminde güvenli ilaç kullanımı için giriş yapın
+            Emzirme döneminde güvenli ilaç kullanımı için {authMode === "login" ? "giriş yapın" : "kayıt olun"}
           </CardDescription>
         </CardHeader>
         
@@ -67,100 +104,269 @@ const Login = () => {
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="pharmacist" className="flex items-center gap-2">
                 <KeyRound className="h-4 w-4" />
-                Eczacı Girişi
+                Eczacı
               </TabsTrigger>
               <TabsTrigger value="doctor" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                Hekim Girişi
+                Hekim
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="pharmacist" className="space-y-4">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-posta Adresi</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ornek@eczane.com" {...field} className="h-11" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Şifre</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="******" {...field} className="h-11" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                    Giriş Yap
-                  </Button>
-                </form>
-              </Form>
+              {authMode === "login" ? (
+                <Form {...loginForm}>
+                  <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
+                    <FormField
+                      control={loginForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormControl>
+                            <Input placeholder="ornek@eczane.com" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={loginForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                      Giriş Yap
+                    </Button>
+                  </form>
+                </Form>
+              ) : (
+                <Form {...registerForm}>
+                  <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-4">
+                    <FormField
+                      control={registerForm.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Ad Soyad</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ad Soyad" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormControl>
+                            <Input placeholder="ornek@eczane.com" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="institution"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Kurum</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Eczane/Hastane Adı" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre Tekrar</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                      Kayıt Ol
+                    </Button>
+                  </form>
+                </Form>
+              )}
             </TabsContent>
 
             <TabsContent value="doctor" className="space-y-4">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>E-posta Adresi</FormLabel>
-                        <FormControl>
-                          <Input placeholder="ornek@hastane.com" {...field} className="h-11" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Şifre</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="******" {...field} className="h-11" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                    Giriş Yap
-                  </Button>
-                </form>
-              </Form>
+              {authMode === "login" ? (
+                <Form {...loginForm}>
+                  <form onSubmit={loginForm.handleSubmit(handleLogin)} className="space-y-4">
+                    <FormField
+                      control={loginForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormControl>
+                            <Input placeholder="ornek@hastane.com" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={loginForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                      Giriş Yap
+                    </Button>
+                  </form>
+                </Form>
+              ) : (
+                <Form {...registerForm}>
+                  <form onSubmit={registerForm.handleSubmit(handleRegister)} className="space-y-4">
+                    <FormField
+                      control={registerForm.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Ad Soyad</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Ad Soyad" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormControl>
+                            <Input placeholder="ornek@hastane.com" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="institution"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Kurum</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Hastane/Klinik Adı" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={registerForm.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Şifre Tekrar</FormLabel>
+                          <FormControl>
+                            <Input type="password" placeholder="******" {...field} className="h-11" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
+                      Kayıt Ol
+                    </Button>
+                  </form>
+                </Form>
+              )}
             </TabsContent>
           </Tabs>
 
           <div className="text-center text-sm">
-            <a href="#" className="text-primary hover:underline hover:text-primary/80 transition-colors">
-              Şifremi unuttum
-            </a>
+            {authMode === "login" && (
+              <a href="#" className="text-primary hover:underline hover:text-primary/80 transition-colors">
+                Şifremi unuttum
+              </a>
+            )}
           </div>
         </CardContent>
         
         <CardFooter className="flex flex-col">
           <p className="text-center text-sm text-muted-foreground mt-2">
-            Henüz hesabınız yok mu?{" "}
-            <a href="#" className="text-primary font-medium hover:underline hover:text-primary/80 transition-colors">
-              Kayıt ol
-            </a>
+            {authMode === "login" ? (
+              <>
+                Henüz hesabınız yok mu?{" "}
+                <button 
+                  onClick={() => setAuthMode("register")} 
+                  className="text-primary font-medium hover:underline hover:text-primary/80 transition-colors"
+                >
+                  Kayıt ol
+                </button>
+              </>
+            ) : (
+              <>
+                Zaten bir hesabınız var mı?{" "}
+                <button 
+                  onClick={() => setAuthMode("login")} 
+                  className="text-primary font-medium hover:underline hover:text-primary/80 transition-colors"
+                >
+                  Giriş yap
+                </button>
+              </>
+            )}
           </p>
         </CardFooter>
       </Card>
