@@ -23,70 +23,70 @@ const Index = () => {
     {
       id: "1",
       name: "Paracetamol",
-      description: "Ateş düşürücü ve analjezik etki gösteren ağrı kesici bir ilaçtır.",
+      description: "A pain reliever and fever reducer with analgesic effect.",
       category: "safe" as const,
-      lastUpdated: "2 gün önce güncellendi",
+      lastUpdated: "Updated 2 days ago",
       isFavorite: true,
     },
     {
       id: "2",
       name: "Metformin",
-      description: "Tip 2 diyabet tedavisinde kullanılan oral antidiyabetik bir ilaçtır.",
+      description: "An oral antidiabetic medication used to treat type 2 diabetes.",
       category: "caution" as const,
-      lastUpdated: "1 hafta önce güncellendi",
+      lastUpdated: "Updated 1 week ago",
       isFavorite: false,
     },
     {
       id: "3",
       name: "Ibuprofen",
-      description: "Non-steroidal antienflamatuar ilaç (NSAID) sınıfında ağrı kesici ve ateş düşürücüdür.",
+      description: "A non-steroidal anti-inflammatory drug (NSAID) used as a pain reliever and fever reducer.",
       category: "caution" as const,
-      lastUpdated: "3 gün önce güncellendi",
+      lastUpdated: "Updated 3 days ago",
       isFavorite: true,
     },
     {
       id: "4",
-      name: "Amoksisilin",
-      description: "Penisilin grubuna ait geniş spektrumlu bir antibiyotiktir.",
+      name: "Amoxicillin",
+      description: "A broad-spectrum antibiotic belonging to the penicillin group.",
       category: "safe" as const,
-      lastUpdated: "5 gün önce güncellendi",
+      lastUpdated: "Updated 5 days ago",
       isFavorite: false,
     },
     {
       id: "5",
-      name: "Diklofenak",
-      description: "Non-steroidal antienflamatuar ilaç (NSAID) grubunda ağrı kesici ve iltihap gidericidir.",
+      name: "Diclofenac",
+      description: "A non-steroidal anti-inflammatory drug (NSAID) used for pain relief and inflammation reduction.",
       category: "danger" as const,
-      lastUpdated: "2 hafta önce güncellendi",
+      lastUpdated: "Updated 2 weeks ago",
       isFavorite: false,
     },
     {
       id: "6",
-      name: "Omeprazol",
-      description: "Proton pompası inhibitörü grubunda mide asidi salgılanmasını azaltan bir ilaçtır.",
+      name: "Omeprazole",
+      description: "A proton pump inhibitor that reduces stomach acid production.",
       category: "safe" as const,
-      lastUpdated: "1 gün önce güncellendi",
+      lastUpdated: "Updated 1 day ago",
       isFavorite: false,
     },
   ];
 
   const guidelines = [
     {
-      title: "Emzirme Döneminde İlaç Kullanım Kılavuzu",
-      organization: "Türk Neonatoloji Derneği",
-      date: "Ocak 2024",
+      title: "Medication Use Guide During Breastfeeding",
+      organization: "National Neonatology Association",
+      date: "January 2024",
       url: "#",
     },
     {
-      title: "Emziren Anne için Antibiyotik Kullanımı Rehberi",
-      organization: "Türkiye Maternal Fetal Tıp ve Perinatoloji Derneği",
-      date: "Aralık 2023",
+      title: "Antibiotic Use Guide for Breastfeeding Mothers",
+      organization: "Maternal Fetal Medicine and Perinatology Association",
+      date: "December 2023",
       url: "#",
     },
     {
-      title: "Laktasyon Döneminde Psikotrop İlaç Kullanımı",
-      organization: "Türkiye Psikiyatri Derneği",
-      date: "Kasım 2023",
+      title: "Psychotropic Medication Use During Lactation",
+      organization: "Psychiatric Association",
+      date: "November 2023",
       url: "#",
     },
   ];
@@ -113,15 +113,15 @@ const Index = () => {
         <div className="space-y-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
             <div>
-              <h1 className="text-2xl font-bold">Hoş Geldiniz</h1>
+              <h1 className="text-2xl font-bold">Welcome</h1>
               <p className="text-muted-foreground">
-                TeraGuard ile emzirme döneminde güvenli ilaç kullanımı hakkında bilgi edinin.
+                Get information about safe medication use during breastfeeding with TeraGuard.
               </p>
             </div>
             <Link to="/login">
               <Button className="flex items-center gap-2">
                 <LogIn className="h-4 w-4" />
-                <span>Giriş Yapın veya Kaydolun</span>
+                <span>Login or Register</span>
               </Button>
             </Link>
           </div>
@@ -129,7 +129,7 @@ const Index = () => {
           <SearchBar />
           
           <div className="pt-2">
-            <h2 className="text-lg font-semibold mb-2">Risk Kategorisine Göre Filtrele</h2>
+            <h2 className="text-lg font-semibold mb-2">Filter by Risk Category</h2>
             <RiskCategoryFilter 
               selectedCategory={selectedCategory}
               onSelectCategory={setSelectedCategory}
@@ -139,7 +139,7 @@ const Index = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-6">
-            <h2 className="text-lg font-semibold">Son Eklenen / Güncellenen Bilgiler</h2>
+            <h2 className="text-lg font-semibold">Recently Added / Updated Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredDrugs.map((drug) => (
                 <RecentDrugCard
@@ -159,7 +159,7 @@ const Index = () => {
             />
             
             <div>
-              <h2 className="text-lg font-semibold mb-4">Güncel Klinik Rehberler</h2>
+              <h2 className="text-lg font-semibold mb-4">Current Clinical Guidelines</h2>
               <div className="space-y-3">
                 {guidelines.map((guideline, index) => (
                   <GuidelineCard key={index} {...guideline} />

@@ -9,7 +9,7 @@ const SearchBar = () => {
       <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
       <Input
         type="search"
-        placeholder="Etken madde veya ilaç adı ile arama yapın..."
+        placeholder="Search by active ingredient or medication name..."
         className="pl-10 py-6"
       />
     </div>

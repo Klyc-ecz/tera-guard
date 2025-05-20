@@ -28,9 +28,9 @@ const DrugHeader: React.FC<DrugHeaderProps> = ({
   };
 
   const categoryLabels = {
-    safe: "Güvenli",
-    caution: "Dikkat",
-    danger: "Riskli",
+    safe: "Safe",
+    caution: "Caution",
+    danger: "Risky",
   };
 
   return (
@@ -63,11 +63,11 @@ const DrugHeader: React.FC<DrugHeaderProps> = ({
               isFavorite ? "fill-yellow-400 text-yellow-400" : ""
             )}
           />
-          {isFavorite ? "Kaydedildi" : "Kaydet"}
+          {isFavorite ? "Saved" : "Save"}
         </Button>
         <Button variant="outline" size="sm" className="gap-2" onClick={onShare}>
           <Share2 className="h-4 w-4" />
-          Paylaş
+          Share
         </Button>
       </div>
     </div>

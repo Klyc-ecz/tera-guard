@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="relative hidden w-1/3 lg:flex">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="İlaç veya etken madde ara..."
+            placeholder="Search for medication or active ingredient..."
             className="w-full pl-8"
           />
         </div>
@@ -37,7 +37,7 @@ const Navbar = () => {
           <Link to="/login">
             <Button variant="outline" className="flex items-center gap-2">
               <LogIn className="h-4 w-4" />
-              <span className="hidden sm:inline">Giriş Yap</span>
+              <span className="hidden sm:inline">Login</span>
             </Button>
           </Link>
           

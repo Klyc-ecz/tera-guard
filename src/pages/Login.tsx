@@ -14,19 +14,19 @@ import { User, KeyRound, ShieldCheck, ShieldAlert, UserPlus, Mail, Lock, Buildin
 
 // Form schema
 const loginSchema = z.object({
-  email: z.string().email({ message: "Geçerli bir e-posta adresi giriniz" }),
-  password: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
 });
 
 const registerSchema = z.object({
-  name: z.string().min(2, { message: "Ad en az 2 karakter olmalıdır" }),
-  email: z.string().email({ message: "Geçerli bir e-posta adresi giriniz" }),
-  password: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
-  confirmPassword: z.string().min(6, { message: "Şifre en az 6 karakter olmalıdır" }),
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters" }),
   institution: z.string().optional(),
   userType: z.enum(["pharmacist", "doctor"]),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Şifreler eşleşmiyor",
+  message: "Passwords do not match",
   path: ["confirmPassword"],
 });
 
@@ -63,7 +63,7 @@ const Login = () => {
     // Demo login simulation
     console.log(`${userType} login:`, values);
     
-    toast.success(`${userType === "pharmacist" ? "Eczacı" : "Hekim"} girişi başarılı!`);
+    toast.success(`${userType === "pharmacist" ? "Pharmacist" : "Doctor"} login successful!`);
     
     // Redirect to home page
     setTimeout(() => navigate("/"), 1500);
@@ -72,7 +72,7 @@ const Login = () => {
   const handleRegister = (values: z.infer<typeof registerSchema>) => {
     console.log(`${userType} register:`, values);
     
-    toast.success(`${userType === "pharmacist" ? "Eczacı" : "Hekim"} kaydı başarılı! Lütfen giriş yapın.`);
+    toast.success(`${userType === "pharmacist" ? "Pharmacist" : "Doctor"} registration successful! Please log in.`);
     
     // Switch to login mode after successful registration
     setAuthMode("login");
@@ -91,7 +91,7 @@ const Login = () => {
           </div>
           <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">TeraGuard</CardTitle>
           <CardDescription className="text-muted-foreground">
-            Emzirme döneminde güvenli ilaç kullanımı için {authMode === "login" ? "giriş yapın" : "kayıt olun"}
+            {authMode === "login" ? "Log in" : "Register"} for safe medication use during breastfeeding
           </CardDescription>
         </CardHeader>
         
@@ -104,11 +104,11 @@ const Login = () => {
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="pharmacist" className="flex items-center gap-2">
                 <KeyRound className="h-4 w-4" />
-                Eczacı
+                Pharmacist
               </TabsTrigger>
               <TabsTrigger value="doctor" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
-                Hekim
+                Doctor
               </TabsTrigger>
             </TabsList>
 
@@ -121,9 +121,9 @@ const Login = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormLabel>Email Address</FormLabel>
                           <FormControl>
-                            <Input placeholder="ornek@eczane.com" {...field} className="h-11" />
+                            <Input placeholder="example@pharmacy.com" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -134,7 +134,7 @@ const Login = () => {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre</FormLabel>
+                          <FormLabel>Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -143,7 +143,7 @@ const Login = () => {
                       )}
                     />
                     <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                      Giriş Yap
+                      Log In
                     </Button>
                   </form>
                 </Form>
@@ -155,9 +155,9 @@ const Login = () => {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Ad Soyad</FormLabel>
+                          <FormLabel>Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Ad Soyad" {...field} className="h-11" />
+                            <Input placeholder="Full Name" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -168,9 +168,9 @@ const Login = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormLabel>Email Address</FormLabel>
                           <FormControl>
-                            <Input placeholder="ornek@eczane.com" {...field} className="h-11" />
+                            <Input placeholder="example@pharmacy.com" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -181,9 +181,9 @@ const Login = () => {
                       name="institution"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Kurum</FormLabel>
+                          <FormLabel>Institution</FormLabel>
                           <FormControl>
-                            <Input placeholder="Eczane/Hastane Adı" {...field} className="h-11" />
+                            <Input placeholder="Pharmacy/Hospital Name" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -194,7 +194,7 @@ const Login = () => {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre</FormLabel>
+                          <FormLabel>Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -207,7 +207,7 @@ const Login = () => {
                       name="confirmPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre Tekrar</FormLabel>
+                          <FormLabel>Confirm Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -216,7 +216,7 @@ const Login = () => {
                       )}
                     />
                     <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                      Kayıt Ol
+                      Register
                     </Button>
                   </form>
                 </Form>
@@ -232,9 +232,9 @@ const Login = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormLabel>Email Address</FormLabel>
                           <FormControl>
-                            <Input placeholder="ornek@hastane.com" {...field} className="h-11" />
+                            <Input placeholder="example@hospital.com" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -245,7 +245,7 @@ const Login = () => {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre</FormLabel>
+                          <FormLabel>Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -254,7 +254,7 @@ const Login = () => {
                       )}
                     />
                     <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                      Giriş Yap
+                      Log In
                     </Button>
                   </form>
                 </Form>
@@ -266,9 +266,9 @@ const Login = () => {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Ad Soyad</FormLabel>
+                          <FormLabel>Full Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Ad Soyad" {...field} className="h-11" />
+                            <Input placeholder="Full Name" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -279,9 +279,9 @@ const Login = () => {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>E-posta Adresi</FormLabel>
+                          <FormLabel>Email Address</FormLabel>
                           <FormControl>
-                            <Input placeholder="ornek@hastane.com" {...field} className="h-11" />
+                            <Input placeholder="example@hospital.com" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -292,9 +292,9 @@ const Login = () => {
                       name="institution"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Kurum</FormLabel>
+                          <FormLabel>Institution</FormLabel>
                           <FormControl>
-                            <Input placeholder="Hastane/Klinik Adı" {...field} className="h-11" />
+                            <Input placeholder="Hospital/Clinic Name" {...field} className="h-11" />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -305,7 +305,7 @@ const Login = () => {
                       name="password"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre</FormLabel>
+                          <FormLabel>Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -318,7 +318,7 @@ const Login = () => {
                       name="confirmPassword"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Şifre Tekrar</FormLabel>
+                          <FormLabel>Confirm Password</FormLabel>
                           <FormControl>
                             <Input type="password" placeholder="******" {...field} className="h-11" />
                           </FormControl>
@@ -327,7 +327,7 @@ const Login = () => {
                       )}
                     />
                     <Button type="submit" size="lg" className="w-full mt-6 bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity">
-                      Kayıt Ol
+                      Register
                     </Button>
                   </form>
                 </Form>
@@ -338,7 +338,7 @@ const Login = () => {
           <div className="text-center text-sm">
             {authMode === "login" && (
               <a href="#" className="text-primary hover:underline hover:text-primary/80 transition-colors">
-                Şifremi unuttum
+                Forgot my password
               </a>
             )}
           </div>
@@ -348,22 +348,22 @@ const Login = () => {
           <p className="text-center text-sm text-muted-foreground mt-2">
             {authMode === "login" ? (
               <>
-                Henüz hesabınız yok mu?{" "}
+                Don't have an account yet?{" "}
                 <button 
                   onClick={() => setAuthMode("register")} 
                   className="text-primary font-medium hover:underline hover:text-primary/80 transition-colors"
                 >
-                  Kayıt ol
+                  Register
                 </button>
               </>
             ) : (
               <>
-                Zaten bir hesabınız var mı?{" "}
+                Already have an account?{" "}
                 <button 
                   onClick={() => setAuthMode("login")} 
                   className="text-primary font-medium hover:underline hover:text-primary/80 transition-colors"
                 >
-                  Giriş yap
+                  Log in
                 </button>
               </>
             )}

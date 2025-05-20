@@ -37,7 +37,7 @@ const GuidelineCard: React.FC<GuidelineCardProps> = ({
           asChild
         >
           <a href={url} target="_blank" rel="noopener noreferrer">
-            Görüntüle
+            View
             <ExternalLink className="h-3 w-3" />
           </a>
         </Button>

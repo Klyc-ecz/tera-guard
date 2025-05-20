@@ -22,9 +22,9 @@ const FavoritesList = ({ favorites, onRemoveFavorite }: FavoritesListProps) => {
       <Card className="bg-muted/40">
         <CardContent className="p-6 flex flex-col items-center justify-center text-center space-y-2">
           <Star className="h-10 w-10 text-muted-foreground/40" />
-          <h3 className="font-medium text-lg">Favori İlaç Yok</h3>
+          <h3 className="font-medium text-lg">No Favorite Medications</h3>
           <p className="text-sm text-muted-foreground">
-            Sık kullandığınız ilaçları favorilere ekleyerek burada görebilirsiniz.
+            Add your frequently used medications to favorites to see them here.
           </p>
         </CardContent>
       </Card>
@@ -39,7 +39,7 @@ const FavoritesList = ({ favorites, onRemoveFavorite }: FavoritesListProps) => {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold mb-4">Favori İlaçlarım</h2>
+      <h2 className="text-lg font-semibold mb-4">My Favorite Medications</h2>
       <Card>
         <CardContent className="p-4">
           <ul className="space-y-2">

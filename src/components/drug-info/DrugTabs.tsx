@@ -11,15 +11,15 @@ const DrugTabs: React.FC<DrugTabsProps> = ({ children, defaultTab = "summary" })
   return (
     <Tabs defaultValue={defaultTab} className="w-full">
       <TabsList className="w-full max-w-full overflow-x-auto flex-nowrap">
-        <TabsTrigger value="summary">Özet</TabsTrigger>
-        <TabsTrigger value="chemical-info">Kimyasal Bilgiler</TabsTrigger>
-        <TabsTrigger value="drug-levels">İlaç Seviyeleri</TabsTrigger>
-        <TabsTrigger value="infant-effects">Bebekteki Etkileri</TabsTrigger>
-        <TabsTrigger value="lactation-effects">Emzirmeye Etkileri</TabsTrigger>
-        <TabsTrigger value="alternatives">Alternatif İlaçlar</TabsTrigger>
-        <TabsTrigger value="references">Kaynaklar</TabsTrigger>
-        <TabsTrigger value="comments">Uzman Görüşleri</TabsTrigger>
-        <TabsTrigger value="discussions">Danış-Sor</TabsTrigger>
+        <TabsTrigger value="summary">Summary</TabsTrigger>
+        <TabsTrigger value="chemical-info">Chemical Information</TabsTrigger>
+        <TabsTrigger value="drug-levels">Drug Levels</TabsTrigger>
+        <TabsTrigger value="infant-effects">Effects on Infant</TabsTrigger>
+        <TabsTrigger value="lactation-effects">Effects on Breastfeeding</TabsTrigger>
+        <TabsTrigger value="alternatives">Alternative Medications</TabsTrigger>
+        <TabsTrigger value="references">References</TabsTrigger>
+        <TabsTrigger value="comments">Expert Opinions</TabsTrigger>
+        <TabsTrigger value="discussions">Ask-Consult</TabsTrigger>
       </TabsList>
       {children}
     </Tabs>

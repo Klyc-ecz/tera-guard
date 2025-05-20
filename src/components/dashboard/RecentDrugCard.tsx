@@ -32,9 +32,9 @@ const RecentDrugCard: React.FC<RecentDrugCardProps> = ({
   };
 
   const categoryLabels = {
-    safe: "Güvenli",
-    caution: "Dikkat",
-    danger: "Riskli",
+    safe: "Safe",
+    caution: "Caution",
+    danger: "Risky",
   };
 
   return (

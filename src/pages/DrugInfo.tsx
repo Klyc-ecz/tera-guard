@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
@@ -18,30 +19,30 @@ const DrugInfo = () => {
     {
       id: "1",
       sender: {
-        name: "Dr. Elif Yılmaz",
-        specialty: "Aile Hekimi",
+        name: "Dr. Emily Johnson",
+        specialty: "Family Medicine",
       },
       time: "10:24",
-      content: "Merhaba, 12 haftalık hamile bir hastam var. Migren atakları için zaman zaman ibuprofen kullandığını belirtti. Bu dönemde ibuprofenin güvenli olup olmadığını teyit etmek istiyorum. Kullanımı önerilir mi, alternatif bir öneriniz olur mu?",
+      content: "Hello, I have a patient who is 12 weeks pregnant. She mentioned occasionally using ibuprofen for migraines. I'd like to confirm if ibuprofen is safe during this period. Is it recommended, or do you have an alternative suggestion?",
       isQuestion: true,
     },
     {
       id: "2",
       sender: {
-        name: "Dr. Ayşe Demir",
-        specialty: "Kadın Doğum Uzmanı",
+        name: "Dr. Sarah Davis",
+        specialty: "Obstetrics & Gynecology",
       },
       time: "11:03",
-      content: "Merhaba Elif Hanım, 12. haftaya kadar ibuprofen sınırlı durumlarda kullanılabiliyor ancak 2. trimesterin başı itibarıyla dikkatli olunmalı. Özellikle 3. trimesterde kontrendikedir. Şu anda alternatif olarak parasetamol tercih edilmesi daha güvenlidir. Migreni sık yaşıyorsa nöroloji görüşü de alınabilir. Geçmiş olsun.",
+      content: "Hello Dr. Johnson, ibuprofen can be used in limited situations until the 12th week, but caution is advised at the beginning of the 2nd trimester. It's contraindicated in the 3rd trimester. For now, acetaminophen (paracetamol) would be a safer alternative. If migraines are frequent, a neurology consultation might be beneficial. I hope your patient feels better soon.",
     },
     {
       id: "3",
       sender: {
-        name: "Dr. Elif Yılmaz",
-        specialty: "Aile Hekimi",
+        name: "Dr. Emily Johnson",
+        specialty: "Family Medicine",
       },
       time: "11:08",
-      content: "Hızlı dönüşünüz için çok teşekkür ederim. Parasetamol ile ilerleyeceğim, gerekirse yönlendirme yaparım.",
+      content: "Thank you for your quick response. I'll proceed with acetaminophen and refer if needed.",
     },
   ];
 
@@ -50,21 +51,21 @@ const DrugInfo = () => {
     name: "Paracetamol",
     scientificName: "Acetaminophen",
     category: "safe" as const,
-    summary: `Paracetamol (asetaminofen) ağrı kesici ve ateş düşürücü bir ilaçtır. Anne sütüne çok düşük miktarda geçer. Emzirme döneminde, önerilen dozlarda kullanıldığında bebekte herhangi bir yan etki gözlenmemiştir. Dünya Sağlık Örgütü (WHO) ve Amerikan Pediatri Akademisi (AAP) tarafından emzirme döneminde güvenli kabul edilmektedir.`,
-    drugLevels: `Anne sütüne geçen paracetamol miktarı, annenin aldığı dozun yaklaşık %1-4'ü kadardır. Bu konsantrasyon, bebekte terapötik etki oluşturacak düzeyin çok altındadır. Anne sütündeki yarı ömrü yaklaşık 1.5-2.5 saattir.`,
-    infantEffects: `Paracetamolün anne sütü yoluyla bebeğe geçen miktarları, bebeği etkileyecek düzeylerin çok altındadır. Yapılan çalışmalarda, anne sütü ile beslenen bebeklerde paracetamol kullanımına bağlı yan etki bildirilmemiştir. Uzun süreli yüksek doz kullanımında teorik olarak karaciğer üzerine etki ihtimali bulunmakla birlikte, klinik pratikte böyle bir durum rapor edilmemiştir.`,
-    lactationEffects: `Paracetamol kullanımının anne sütü üretimini etkilediğine dair herhangi bir veri bulunmamaktadır. Süt miktarı veya içeriği üzerine olumsuz bir etkisi gözlenmemiştir.`,
-    alternatives: `Emzirme döneminde ağrı kontrolünde paracetamol, ibuprofen ve asetilsalisilik asit (düşük doz) kullanılabilir. İbuprofen, 6 aydan küçük bebeklerde daha dikkatli değerlendirilmelidir. Kodein içeren kombinasyon preparatlarından kaçınılmalıdır.`,
+    summary: `Paracetamol (acetaminophen) is a pain reliever and fever reducer. It passes into breast milk in very small amounts. No adverse effects have been observed in the infant when used at recommended doses during breastfeeding. It is considered safe during breastfeeding by the World Health Organization (WHO) and the American Academy of Pediatrics (AAP).`,
+    drugLevels: `The amount of paracetamol that passes into breast milk is approximately 1-4% of the mother's dose. This concentration is well below levels that would have therapeutic effects in the infant. The half-life in breast milk is approximately 1.5-2.5 hours.`,
+    infantEffects: `The amounts of paracetamol passing into breast milk are well below levels that would affect the infant. Studies have not reported any adverse effects in breastfed infants whose mothers used paracetamol. Theoretically, there is a potential effect on the liver with long-term high-dose use, but no such case has been reported in clinical practice.`,
+    lactationEffects: `There is no data to suggest that paracetamol affects milk production. No negative effects on milk quantity or content have been observed.`,
+    alternatives: `For pain control during breastfeeding, paracetamol, ibuprofen, and acetylsalicylic acid (low dose) can be used. Ibuprofen should be evaluated more carefully in infants under 6 months. Combination preparations containing codeine should be avoided.`,
     atcCode: "N02BE01",
     formula: "C8H9NO2",
     molecularWeight: "151.16 g/mol",
     netMass: "500 mg/tablet",
-    mechanismOfAction: `Paracetamol, beyin ve omurilikte bulunan siklooksijenaz-3 (COX-3) enzimini seçici olarak inhibe ederek analjezik ve antipiretik etki gösterir. Periferik dokulardaki düşük antienflamatuvar etkisi, periferik dokularda düşük miktarda bulunan peroksitler nedeniyle siklooksijenaz enzimini inhibe etme kapasitesinin düşük olmasına bağlıdır.`,
+    mechanismOfAction: `Paracetamol selectively inhibits the cyclooxygenase-3 (COX-3) enzyme in the brain and spinal cord to produce its analgesic and antipyretic effects. Its low anti-inflammatory effect in peripheral tissues is due to its low capacity to inhibit the cyclooxygenase enzyme in peripheral tissues due to the low amount of peroxides present.`,
     pharmacokinetics: `
-      - Emilim: Oral yoldan alındıktan sonra gastrointestinal kanaldan hızla emilir. Maksimum plazma konsantrasyonuna 30-60 dakika içinde ulaşır.
-      - Dağılım: Vücut sıvılarına hızla dağılır. Plazma proteinlerine bağlanma oranı düşüktür (<%20).
-      - Metabolizma: Karaciğerde glukuronik asit ve sülfat ile konjugasyona uğrar (%90). Küçük bir kısmı (%5-10) sitokrom P450 enzim sistemi tarafından metabolize edilir.
-      - Eliminasyon: Metabolitleri idrarla atılır. Plazma yarılanma ömrü 1.5-3 saattir.
+      - Absorption: Rapidly absorbed from the gastrointestinal tract after oral administration. Maximum plasma concentration is reached within 30-60 minutes.
+      - Distribution: Rapidly distributed to body fluids. Plasma protein binding is low (<20%).
+      - Metabolism: Metabolized in the liver by conjugation with glucuronic acid and sulfate (90%). A small portion (5-10%) is metabolized by the cytochrome P450 enzyme system.
+      - Elimination: Metabolites are excreted in the urine. Plasma half-life is 1.5-3 hours.
     `,
     references: [
       "US National Library of Medicine. DailyMed - ACETAMINOPHEN tablet. https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=53b3ed76-34db-4a2a-aa5a-14a24c45e73c",
@@ -74,16 +75,16 @@ const DrugInfo = () => {
     ],
     comments: [
       {
-        author: "Dr. Ayşe Yılmaz",
-        specialty: "Klinik Farmakoloji",
-        date: "15 Mart 2024",
-        content: "Parasetamol, emzirme döneminde ilk tercih edilmesi gereken analjeziklerden biridir. Özellikle ateş ve hafif-orta şiddetli ağrıda güvenli bir seçenektir."
+        author: "Dr. Alice Johnson",
+        specialty: "Clinical Pharmacology",
+        date: "March 15, 2024",
+        content: "Paracetamol is one of the first-choice analgesics during breastfeeding. It's particularly safe for fever and mild to moderate pain."
       },
       {
-        author: "Prof. Dr. Mehmet Kara",
-        specialty: "Neonatoloji",
-        date: "10 Şubat 2024",
-        content: "Anne sütüne geçen parasetamolün bebeğe zararı olmadığı pek çok çalışmada gösterilmiştir. Bununla birlikte, annenin yüksek dozda ve uzun süreli kullanımında dikkatli olunmalıdır."
+        author: "Prof. Michael Black",
+        specialty: "Neonatology",
+        date: "February 10, 2024",
+        content: "Numerous studies have shown that paracetamol in breast milk does not harm the infant. However, caution should be exercised with high doses and long-term use by the mother."
       }
     ]
   };
@@ -91,7 +92,7 @@ const DrugInfo = () => {
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
     toast({
-      title: !isFavorite ? "Favorilere eklendi" : "Favorilerden çıkarıldı",
+      title: !isFavorite ? "Added to favorites" : "Removed from favorites",
       description: drug.name,
     });
   };
@@ -99,8 +100,8 @@ const DrugInfo = () => {
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     toast({
-      title: "Bağlantı kopyalandı",
-      description: "İlaç bilgisinin bağlantısı panoya kopyalandı.",
+      title: "Link copied",
+      description: "Medication information link copied to clipboard.",
     });
   };
 
@@ -120,7 +121,7 @@ const DrugInfo = () => {
           <TabsContent value="summary">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Kullanım Özeti</h2>
+                <h2 className="text-xl font-semibold mb-4">Usage Summary</h2>
                 <p className="text-base leading-relaxed">{drug.summary}</p>
               </CardContent>
             </Card>
@@ -131,39 +132,39 @@ const DrugInfo = () => {
               <CardContent className="p-6">
                 <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                   <FlaskConical className="h-5 w-5" />
-                  Kimyasal Bilgiler
+                  Chemical Information
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="text-lg font-medium mb-2">ATC Kodu</h3>
+                      <h3 className="text-lg font-medium mb-2">ATC Code</h3>
                       <p className="text-base bg-muted p-2 rounded">{drug.atcCode}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Formülü</h3>
+                      <h3 className="text-lg font-medium mb-2">Formula</h3>
                       <p className="text-base bg-muted p-2 rounded">{drug.formula}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Molekül Ağırlığı</h3>
+                      <h3 className="text-lg font-medium mb-2">Molecular Weight</h3>
                       <p className="text-base bg-muted p-2 rounded">{drug.molecularWeight}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Net Kütlesi</h3>
+                      <h3 className="text-lg font-medium mb-2">Net Mass</h3>
                       <p className="text-base bg-muted p-2 rounded">{drug.netMass}</p>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Etki Mekanizması</h3>
+                      <h3 className="text-lg font-medium mb-2">Mechanism of Action</h3>
                       <p className="text-base leading-relaxed">{drug.mechanismOfAction}</p>
                     </div>
                     
                     <div>
-                      <h3 className="text-lg font-medium mb-2">Farmakokinetik Özellikleri</h3>
+                      <h3 className="text-lg font-medium mb-2">Pharmacokinetic Properties</h3>
                       <div className="text-base leading-relaxed whitespace-pre-line">{drug.pharmacokinetics}</div>
                     </div>
                   </div>
@@ -175,8 +176,8 @@ const DrugInfo = () => {
           <TabsContent value="drug-levels">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">İlaç Seviyeleri</h2>
-                <h3 className="font-medium text-lg mb-2">Anne Sütündeki Seviyeler</h3>
+                <h2 className="text-xl font-semibold mb-4">Drug Levels</h2>
+                <h3 className="font-medium text-lg mb-2">Levels in Breast Milk</h3>
                 <p className="text-base leading-relaxed">{drug.drugLevels}</p>
               </CardContent>
             </Card>
@@ -185,7 +186,7 @@ const DrugInfo = () => {
           <TabsContent value="infant-effects">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Bebekteki Etkileri</h2>
+                <h2 className="text-xl font-semibold mb-4">Effects on Infant</h2>
                 <p className="text-base leading-relaxed">{drug.infantEffects}</p>
               </CardContent>
             </Card>
@@ -194,7 +195,7 @@ const DrugInfo = () => {
           <TabsContent value="lactation-effects">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Emzirmeye Etkileri</h2>
+                <h2 className="text-xl font-semibold mb-4">Effects on Breastfeeding</h2>
                 <p className="text-base leading-relaxed">{drug.lactationEffects}</p>
               </CardContent>
             </Card>
@@ -203,7 +204,7 @@ const DrugInfo = () => {
           <TabsContent value="alternatives">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Alternatif İlaçlar</h2>
+                <h2 className="text-xl font-semibold mb-4">Alternative Medications</h2>
                 <p className="text-base leading-relaxed">{drug.alternatives}</p>
               </CardContent>
             </Card>
@@ -212,7 +213,7 @@ const DrugInfo = () => {
           <TabsContent value="references">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Kaynaklar</h2>
+                <h2 className="text-xl font-semibold mb-4">References</h2>
                 <ul className="list-disc pl-5 space-y-2">
                   {drug.references.map((ref, index) => (
                     <li key={index} className="text-base">{ref}</li>
@@ -225,7 +226,7 @@ const DrugInfo = () => {
           <TabsContent value="comments">
             <Card>
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Uzman Görüşleri</h2>
+                <h2 className="text-xl font-semibold mb-4">Expert Opinions</h2>
                 <div className="space-y-4">
                   {drug.comments.map((comment, index) => (
                     <div key={index} className="p-4 border rounded-md">
