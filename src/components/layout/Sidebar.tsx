@@ -33,10 +33,11 @@ const Sidebar = () => {
 
   const menuItems = [
     { to: "/", label: "Ana Sayfa", icon: <Home className="h-5 w-5" /> },
-    { to: "/patient-cases", label: "Hasta Vakaları", icon: <Book className="h-5 w-5" /> },
-    { to: "/product-info", label: "Ürün Bilgileri", icon: <MessageSquare className="h-5 w-5" /> },
+    { to: "/patient-case", label: "Hasta Vakaları", icon: <Book className="h-5 w-5" /> },
+    { to: "/drug-info", label: "İlaç Bilgileri", icon: <MessageSquare className="h-5 w-5" /> },
     { to: "/ai-assistant", label: "AI Asistan", icon: <Filter className="h-5 w-5" /> },
-    { to: "/faq", label: "SSS", icon: <User className="h-5 w-5" /> },
+    { to: "/archive", label: "KÜB/Pİ Arşivi", icon: <Book className="h-5 w-5" /> },
+    { to: "/comparisons", label: "İlaç Karşılaştırmaları", icon: <Filter className="h-5 w-5" /> },
     { to: "/profile", label: "Profil", icon: <User className="h-5 w-5" /> }
   ];
 
