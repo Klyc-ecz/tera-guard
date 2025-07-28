@@ -13,8 +13,8 @@ const Navbar = () => {
           <Link to="/" className="flex items-center">
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-6 w-6 text-primary" />
-              <span className="hidden text-xl font-bold sm:inline-block bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                TeraGuard
+              <span className="hidden text-xl font-bold sm:inline-block bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                NEU-GUARD
               </span>
             </div>
           </Link>
@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="relative hidden w-1/3 lg:flex">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search for medication or active ingredient..."
+            placeholder="İlaç veya etken madde arayın..."
             className="w-full pl-8"
           />
         </div>
@@ -37,7 +37,7 @@ const Navbar = () => {
           <Link to="/login">
             <Button variant="outline" className="flex items-center gap-2">
               <LogIn className="h-4 w-4" />
-              <span className="hidden sm:inline">Login</span>
+              <span className="hidden sm:inline">Giriş</span>
             </Button>
           </Link>
           

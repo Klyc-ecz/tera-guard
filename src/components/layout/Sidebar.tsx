@@ -32,18 +32,20 @@ const Sidebar = () => {
   const currentPath = location.pathname;
 
   const menuItems = [
-    { to: "/", label: "Home", icon: <Home className="h-5 w-5" /> },
-    { to: "/drug-info", label: "Drug Information", icon: <Book className="h-5 w-5" /> },
-    { to: "/consult", label: "Ask / Consult", icon: <MessageSquare className="h-5 w-5" /> },
-    { to: "/risk-analysis", label: "Risk Analysis", icon: <Filter className="h-5 w-5" /> },
-    { to: "/profile", label: "Profile", icon: <User className="h-5 w-5" /> }
+    { to: "/", label: "Ana Sayfa", icon: <Home className="h-5 w-5" /> },
+    { to: "/patient-cases", label: "Hasta Vakaları", icon: <Book className="h-5 w-5" /> },
+    { to: "/product-info", label: "Ürün Bilgileri", icon: <MessageSquare className="h-5 w-5" /> },
+    { to: "/ai-assistant", label: "AI Asistan", icon: <Filter className="h-5 w-5" /> },
+    { to: "/faq", label: "SSS", icon: <User className="h-5 w-5" /> },
+    { to: "/profile", label: "Profil", icon: <User className="h-5 w-5" /> }
   ];
 
   return (
     <div className="hidden border-r bg-background md:block w-64 overflow-y-auto">
       <div className="flex flex-col h-full py-4">
         <div className="px-4 py-2">
-          <h2 className="text-lg font-semibold">TeraGuard</h2>
+          <h2 className="text-lg font-semibold text-primary">NEU-GUARD</h2>
+          <p className="text-xs text-muted-foreground">NEUTEC İlaç</p>
         </div>
         
         <div className="px-3 py-2">
@@ -64,12 +66,12 @@ const Sidebar = () => {
         </div>
         
         <div className="mt-4 px-3 py-2">
-          <h3 className="mb-2 px-3 text-xs font-medium text-muted-foreground">Favorites</h3>
+          <h3 className="mb-2 px-3 text-xs font-medium text-muted-foreground">Hızlı Erişim</h3>
           <div className="space-y-1">
             <NavLink
               to="/favorites"
               icon={<Star className="h-5 w-5" />}
-              label="Saved Medications"
+              label="Favoriler"
               isActive={currentPath === "/favorites"}
             />
           </div>
