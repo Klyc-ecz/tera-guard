@@ -7,10 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Users, Pill, Bot, HelpCircle, Archive, TrendingUp, FileDown, AlertTriangle, CheckCircle, AlertCircle, Search, Send, Plus, Star, Clock, Bookmark, FileText, Download } from "lucide-react";
-import neutecLogo from "@/assets/neutec-logo.png";
-
-// Force rebuild to clear ClipboardList cache issue
+import { Users, Pill, Bot, HelpCircle, Archive, TrendingUp, FileDown, AlertTriangle, CheckCircle, AlertCircle, Search, Send, Plus, Star, Clock, Bookmark, FileText, Download, Calendar, MessageSquare, MapPin, Globe } from "lucide-react";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -59,12 +56,13 @@ const Index = () => {
     }
   ];
 
-  // Quick access items
+  // Quick access items for field representatives
   const quickAccessItems = [
-    { title: "Yeni Vaka Ekle", icon: Plus, description: "Yeni hasta vakası ekleyin" },
-    { title: "Son Görüntülenen Ürünler", icon: Clock, description: "En son incelediğiniz ürünler" },
-    { title: "Gebelikte En Sık Sorulan Moleküller", icon: Star, description: "Sık sorulan ilaç molekülleri" },
-    { title: "En Son AI Sorgunuz", icon: Bot, description: "Son yapılan AI sorguları" }
+    { title: "Ürün KÜB / Pİ Bilgileri", icon: FileText, description: "Ürün belgelerine hızlı erişim" },
+    { title: "Hekimden Gelen Soruya Yanıtla", icon: MessageSquare, description: "Doktor sorularını AI ile yanıtlayın" },
+    { title: "AI Asistan ile Sorgula", icon: Bot, description: "Medikal sorularınızı sorun" },
+    { title: "Bugünkü Ziyaret Listem", icon: MapPin, description: "Günlük ziyaret planınız" },
+    { title: "Yeni Ürün Bilgilendirmesi", icon: Globe, description: "En son ürün güncellemeleri" }
   ];
 
   // Bulletin/Updates data
@@ -161,18 +159,15 @@ Kaynak: FDA Pregnancy Categories Guidelines, 2023 | PubMed PMID: 12345678`);
       <div className="space-y-6 font-inter">
         {/* Welcome Area */}
         <div className="bg-gradient-to-r from-primary/10 to-secondary/20 rounded-xl p-6 border border-primary/20">
-          <h1 className="text-2xl font-bold text-primary mb-3">
+          <h1 className="text-2xl font-bold text-primary mb-2">
             👋 Hoş geldiniz, Dr. Ayşe Yılmaz
           </h1>
-          <p className="text-lg text-foreground font-medium mb-4">
-            NEU-GUARD: Hekimler ve Saha Ekipleri İçin Akıllı Destek Platformu
+          <p className="text-lg text-foreground font-medium text-center mb-2">
+            Hekime Güvenilir Bilgi, Temsilciye Akıllı Destek
           </p>
-          <div className="flex items-center gap-3">
-            <img src={neutecLogo} alt="NEUTEC İlaç" className="h-8 w-auto" />
-            <p className="text-muted-foreground font-medium">
-              NEUTEC İlaç güvencesiyle
-            </p>
-          </div>
+          <p className="text-sm text-muted-foreground text-center">
+            NEU-GUARD | Saha Temsilcisi Portal
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
