@@ -10,6 +10,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Users, Pill, Bot, HelpCircle, Archive, TrendingUp, FileDown, AlertTriangle, CheckCircle, AlertCircle, Search, Send, Plus, Star, Clock, Bookmark, FileText, Download } from "lucide-react";
 import neutecLogo from "@/assets/neutec-logo.png";
 
+// Force rebuild to clear ClipboardList cache issue
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [aiQuery, setAiQuery] = useState("");
