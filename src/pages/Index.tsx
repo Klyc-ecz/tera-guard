@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ClipboardList, Pill, Bot, HelpCircle, FileText, Download, AlertTriangle, CheckCircle, AlertCircle, Search, Send, Plus, Star, Clock, Bookmark } from "lucide-react";
+import { Users, Pill, Bot, HelpCircle, Archive, TrendingUp, FileDown, AlertTriangle, CheckCircle, AlertCircle, Search, Send, Plus, Star, Clock, Bookmark, FileText, Download } from "lucide-react";
+import neutecLogo from "@/assets/neutec-logo.png";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -158,15 +159,18 @@ Kaynak: FDA Pregnancy Categories Guidelines, 2023 | PubMed PMID: 12345678`);
       <div className="space-y-6 font-inter">
         {/* Welcome Area */}
         <div className="bg-gradient-to-r from-primary/10 to-secondary/20 rounded-xl p-6 border border-primary/20">
-          <h1 className="text-2xl font-bold text-primary mb-2">
+          <h1 className="text-2xl font-bold text-primary mb-3">
             👋 Hoş geldiniz, Dr. Ayşe Yılmaz
           </h1>
-          <p className="text-lg text-foreground font-medium mb-1">
+          <p className="text-lg text-foreground font-medium mb-4">
             NEU-GUARD: Hekimler ve Saha Ekipleri İçin Akıllı Destek Platformu
           </p>
-          <p className="text-muted-foreground">
-            Hamilelik döneminde güvenli ilaç kullanımı için tüm kaynaklara buradan ulaşabilirsiniz.
-          </p>
+          <div className="flex items-center gap-3">
+            <img src={neutecLogo} alt="NEUTEC İlaç" className="h-8 w-auto" />
+            <p className="text-muted-foreground font-medium">
+              NEUTEC İlaç güvencesiyle
+            </p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -175,32 +179,32 @@ Kaynak: FDA Pregnancy Categories Guidelines, 2023 | PubMed PMID: 12345678`);
             <Tabs defaultValue="patient-cases" className="w-full">
               <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 h-12 bg-secondary/30">
                 <TabsTrigger value="patient-cases" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  <ClipboardList className="h-3 w-3" />
-                  📋 Hasta Vakaları
+                  <Users className="h-3 w-3" />
+                  Hasta Vakaları
                 </TabsTrigger>
                 <TabsTrigger value="drug-info" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                   <Pill className="h-3 w-3" />
-                  💊 İlaç Bilgisi
+                  İlaç Bilgisi
                 </TabsTrigger>
                 <TabsTrigger value="ai-assistant" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                   <Bot className="h-3 w-3" />
-                  🤖 Yapay Zekâ Asistan
+                  Yapay Zekâ Asistan
                 </TabsTrigger>
                 <TabsTrigger value="archive" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  <FileText className="h-3 w-3" />
-                  📚 Güncel KÜB/Pİ Arşivi
+                  <Archive className="h-3 w-3" />
+                  Güncel KÜB/Pİ Arşivi
                 </TabsTrigger>
                 <TabsTrigger value="faq" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                   <HelpCircle className="h-3 w-3" />
-                  ❓ SSS
+                  SSS
                 </TabsTrigger>
                 <TabsTrigger value="comparisons" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  <Star className="h-3 w-3" />
-                  📈 İlaç Karşılaştırmaları
+                  <TrendingUp className="h-3 w-3" />
+                  İlaç Karşılaştırmaları
                 </TabsTrigger>
                 <TabsTrigger value="reports" className="flex items-center gap-1 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-                  <Download className="h-3 w-3" />
-                  📄 Raporlama & PDF
+                  <FileDown className="h-3 w-3" />
+                  Raporlama & PDF
                 </TabsTrigger>
               </TabsList>
 
