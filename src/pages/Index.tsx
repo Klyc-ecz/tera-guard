@@ -157,17 +157,233 @@ Kaynak: FDA Pregnancy Categories Guidelines, 2023 | PubMed PMID: 12345678`);
   return (
     <Layout>
       <div className="space-y-6 font-inter">
-        {/* Welcome Area */}
-        <div className="bg-gradient-to-r from-primary/10 to-secondary/20 rounded-xl p-6 border border-primary/20">
-          <h1 className="text-2xl font-bold text-primary mb-2">
-            👋 Hoş geldiniz, Dr. Ayşe Yılmaz
-          </h1>
-          <p className="text-lg text-foreground font-medium text-center mb-2">
-            Hekime Güvenilir Bilgi, Temsilciye Akıllı Destek
-          </p>
-          <p className="text-sm text-muted-foreground text-center">
-            NEU-GUARD | Saha Temsilcisi Portal
-          </p>
+        {/* Field Representative Dashboard */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {/* 1. Today's Visit Plan */}
+          <Card className="xl:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                🧩 Bugünkü Ziyaret Planım
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="p-3 border rounded-lg">
+                  <div className="font-medium">Dr. Mehmet Kaya</div>
+                  <div className="text-sm text-muted-foreground">Acıbadem Hastanesi - Kadın Doğum</div>
+                  <div className="mt-2 text-xs text-primary">Görüşülecek: NEUREM, ESPLUS</div>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="font-medium">Dr. Fatma Özkan</div>
+                  <div className="text-sm text-muted-foreground">Memorial Hastanesi - Psikiyatri</div>
+                  <div className="mt-2 text-xs text-primary">Görüşülecek: NEUREM</div>
+                </div>
+              </div>
+              <Textarea placeholder="Ziyaret sonrası not: (örn: NEUREM için broşür verildi)" className="min-h-[60px]" />
+              <Button className="w-full">
+                <CheckCircle className="h-4 w-4 mr-2" />
+                Ziyareti Tamamla ✅
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* 2. Quick Product Info Cards */}
+          <Card className="xl:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                💊 Hızlı Ürün Bilgi Kartları
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                <div className="font-medium text-primary">NEUREM 10 MG</div>
+                <div className="text-xs text-muted-foreground mt-1">Depresyon, anksiyete</div>
+                <div className="text-xs mt-2 p-2 bg-blue-50 rounded">
+                  "NEUREM, depresyon tedavisinde gebelik kategorisi C olan SSRI'dır."
+                </div>
+                <Button size="sm" variant="outline" className="mt-2 w-full">KÜB</Button>
+              </div>
+              <div className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                <div className="font-medium text-primary">ESPLUS 10 MG</div>
+                <div className="text-xs text-muted-foreground mt-1">Depresyon, panik bozukluk</div>
+                <div className="text-xs mt-2 p-2 bg-blue-50 rounded">
+                  "ESPLUS, SSRI grubu antidepresan, emzirmede dikkat."
+                </div>
+                <Button size="sm" variant="outline" className="mt-2 w-full">KÜB</Button>
+              </div>
+              <div className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer">
+                <div className="font-medium text-primary">DULATEC 30 MG</div>
+                <div className="text-xs text-muted-foreground mt-1">Gastroözofageal reflü</div>
+                <div className="text-xs mt-2 p-2 bg-blue-50 rounded">
+                  "DULATEC, PPI grubu, gebelikte B kategorisi güvenli."
+                </div>
+                <Button size="sm" variant="outline" className="mt-2 w-full">KÜB</Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* 3. Clinical Info Cards / Medical Education */}
+          <Card className="xl:col-span-1">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                🎯 Medikal Eğitim Modülü
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="p-3 bg-yellow-50 rounded-lg">
+                <div className="font-medium text-sm">En Sık Sorulan:</div>
+                <div className="text-xs text-muted-foreground mt-1">"NEUREM gebelikte güvenli mi?"</div>
+              </div>
+              <div className="p-3 bg-red-50 rounded-lg">
+                <div className="font-medium text-sm">❌ Hatalı Söylem:</div>
+                <div className="text-xs text-muted-foreground mt-1">"Tüm antidepresanlar aynı risk"</div>
+              </div>
+              <div className="p-3 bg-green-50 rounded-lg">
+                <div className="font-medium text-sm">✅ Doğru Anlatım:</div>
+                <div className="text-xs text-muted-foreground mt-1">"SSRI'lar farklı kategoriler, FDA C sınıfı"</div>
+              </div>
+              <div className="p-3 border rounded-lg">
+                <div className="font-medium text-sm">Mini Quiz:</div>
+                <div className="text-xs mt-2">"NEUREM gebelikte güvenli midir?"</div>
+                <div className="space-y-1 mt-2">
+                  <Button size="sm" variant="outline" className="w-full text-xs h-6">A) Evet, tamamen güvenli</Button>
+                  <Button size="sm" variant="outline" className="w-full text-xs h-6">B) Hayır, kesinlikle kullanılmaz</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Second Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* 4. Product Updates & Launches */}
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                🗂️ Ürün Güncellemeleri & Lansmanlar
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="grid md:grid-cols-2 gap-3">
+                <div className="p-3 border rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-green-100 text-green-800">YENİ</Badge>
+                    <span className="font-medium text-sm">AIRFIX Plus Lansmanı</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground">Yeni formülasyon, gelişmiş etkinlik</div>
+                  <Button size="sm" variant="outline" className="mt-2">
+                    <Download className="h-3 w-3 mr-1" />
+                    Broşür İndir
+                  </Button>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-blue-100 text-blue-800">GÜNCELLEME</Badge>
+                    <span className="font-medium text-sm">NEUREM KÜB Güncellemesi</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground">Gebelik kategorisi bilgileri güncellendi</div>
+                  <Button size="sm" variant="outline" className="mt-2">
+                    <FileText className="h-3 w-3 mr-1" />
+                    KÜB Görüntüle
+                  </Button>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-orange-100 text-orange-800">FİYAT</Badge>
+                    <span className="font-medium text-sm">ESPLUS Fiyat Değişikliği</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground">92,21 ₺ → 89,15 ₺</div>
+                  <Button size="sm" variant="outline" className="mt-2">
+                    <Download className="h-3 w-3 mr-1" />
+                    Fiyat Listesi
+                  </Button>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-purple-100 text-purple-800">ÇALIŞMA</Badge>
+                    <span className="font-medium text-sm">DULATEC Klinik Çalışması</span>
+                  </div>
+                  <div className="text-xs text-muted-foreground">Yeni etkinlik verileri yayımlandı</div>
+                  <Button size="sm" variant="outline" className="mt-2">
+                    <FileText className="h-3 w-3 mr-1" />
+                    Çalışma PDF
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Right Panel - 5. Doctor's Questions & 6. Performance */}
+          <div className="space-y-6">
+            {/* 5. Doctor's Question Response Panel */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  💬 Hekimden Gelen Sorular
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="p-3 border rounded-lg">
+                  <div className="text-sm font-medium">Dr. Kaya'dan soru:</div>
+                  <div className="text-xs text-muted-foreground mt-1">"NEUREM ve emzirme?"</div>
+                  <div className="flex gap-2 mt-2">
+                    <Button size="sm" variant="outline" className="text-xs">
+                      <Bot className="h-3 w-3 mr-1" />
+                      AI Yanıt
+                    </Button>
+                    <Button size="sm" variant="outline" className="text-xs">
+                      <Send className="h-3 w-3 mr-1" />
+                      WhatsApp
+                    </Button>
+                  </div>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="text-sm font-medium">Dr. Özkan'dan soru:</div>
+                  <div className="text-xs text-muted-foreground mt-1">"Yaşlı hastada doz?"</div>
+                  <div className="flex gap-2 mt-2">
+                    <Button size="sm" variant="outline" className="text-xs">
+                      <Bot className="h-3 w-3 mr-1" />
+                      AI Yanıt
+                    </Button>
+                    <Button size="sm" variant="outline" className="text-xs">
+                      <Send className="h-3 w-3 mr-1" />
+                      E-mail
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* 6. Personal Performance Panel */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  📊 Kişisel Performans
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center p-3 bg-blue-50 rounded-lg">
+                    <div className="text-2xl font-bold text-primary">7</div>
+                    <div className="text-xs text-muted-foreground">Bugünkü Ziyaret</div>
+                  </div>
+                  <div className="text-center p-3 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">NEUREM</div>
+                    <div className="text-xs text-muted-foreground">En Çok Erişilen</div>
+                  </div>
+                </div>
+                <div className="p-3 border rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm">Haftalık Hedef</span>
+                    <span className="text-sm font-medium">35/40</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                    <div className="bg-primary h-2 rounded-full" style={{width: '87.5%'}}></div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
